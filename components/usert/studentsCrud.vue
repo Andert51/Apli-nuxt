@@ -72,10 +72,10 @@ export default {
   },
   methods: {
     loadstudents () {
-      const token2 = cookies.get('token2')
+      const token = cookies.get('token')
       this.$axios.get('/all', {
         headers: {
-          Authorization: `Bearer ${token2}`
+          Authorization: `Bearer ${token}`
         }
       }).then((res) => {
         console.log('@Nint res =>', res.data)

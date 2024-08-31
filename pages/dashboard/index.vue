@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>
-      Session Started with Backend
+      Welcome Back !
     </h1>
   </div>
 </template>
@@ -12,7 +12,7 @@ export default {
   middleware: 'detectpush',
   mounted () {
     // const token = localStorage.getItem('token') //manejado con localstorage
-    const cookietoken = cookies.set('token2')
+    const cookietoken = cookies.get('token')
     console.log('@Nint =>', cookietoken)
     if (!cookietoken) {
       this.$router.push('/')

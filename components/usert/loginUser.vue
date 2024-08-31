@@ -83,8 +83,8 @@ export default {
   methods: {
     loginBackend () {
       console.log('@Nint Credentials => ', this.user, this.password)
-      const isValid = this.$refs.form.validate()
-      if (isValid) {
+      const isValid = this.$refs.form.validate() //
+      if (isValid) { //
         const body = {
           user: this.user,
           password: this.password
@@ -92,10 +92,9 @@ export default {
         this.$axios.post('/login', body)
           .then((res) => {
             if (res.data && res.data.token) {
-              cookies.set('token2', res.data.token, { expires: 1, path: '/' }) // Con path la cookie esta disponible en todas las paginas
-
+              cookies.set('token', res.data.token, { expires: 1, path: '/' }) // Con path la cookie esta disponible en todas las paginas
               // localStorage.setItem('token', res.data.token) // con localstorage
-              // cookies.remove('token2') // Eliminar una cookie al cerrar sesion, eso es extra
+              // cookies.remove('token') // Eliminar una cookie al cerrar sesion, eso es extra
               console.log('@Nint token => ', res.data.token)
               this.$router.push('/dashboard')
             }
@@ -103,7 +102,7 @@ export default {
           .catch((error) => {
             console.error('@Nint error =>', error)
           })
-      } else {
+      } else { //
         this.$emit('show-alert', {
           showAlert: true,
           color: 'red',
