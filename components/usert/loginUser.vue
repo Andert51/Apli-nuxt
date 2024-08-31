@@ -49,7 +49,7 @@
       </v-form>
     </v-card-text>
     <v-card-actions>
-      <v-row align="center" justify="center" >
+      <v-row align="center" justify="center">
         <v-btn
           color="cyan lighten-4"
           @click="loginBackend"
@@ -75,31 +75,44 @@ export default {
       password: '',
       passwordRules: [
         value => !!value || 'Password cannot be empty!',
-        value => (value && value.length >= 8) || 'Password must be at least 8 characters',
-        value => (value && /[!@#$%^&*(),.?":{}|<>]/.test(value)) || 'At least one special character'
+        value => (value && value.length >= 4) || 'Password must be at least 4 characters'
+        // value => (value && /[!@#$%^&*(),.?":{}|<>]/.test(value)) || 'At least one special character'
       ]
     }
   },
   methods: {
     loginBackend () {
-      const body = {
-        user: this.user,
-        password: this.password
-      }
-      this.$axios.post('/login', body)
-        .then((res) => {
-          if (res.data && res.data.token) {
-            cookies.set('token2', res.data.token, { expires: 1, path: '/' }) // Con path la cookie esta disponible en todas las paginas
+      console.log('@Nint Credentials => ', this.user, this.password)
+      const isValid = this.$refs.form.validate()
+      if (isValid) {
+        const body = {
+          user: this.user,
+          password: this.password
+        }
+        this.$axios.post('/login', body)
+          .then((res) => {
+            if (res.data && res.data.token) {
+              cookies.set('token2', res.data.token, { expires: 1, path: '/' }) // Con path la cookie esta disponible en todas las paginas
 
-            // localStorage.setItem('token', res.data.token) // con localstorage
-            // cookies.remove('token2') // Eliminar una cookie al cerrar sesion, eso es extra
-            console.log('@Nint token => ', res.data.token)
-            this.$router.push('/dashboard')
-          }
+              // localStorage.setItem('token', res.data.token) // con localstorage
+              // cookies.remove('token2') // Eliminar una cookie al cerrar sesion, eso es extra
+              console.log('@Nint token => ', res.data.token)
+              this.$router.push('/dashboard')
+            }
+          })
+          .catch((error) => {
+            console.error('@Nint error =>', error)
+          })
+      } else {
+        this.$emit('show-alert', {
+          showAlert: true,
+          color: 'red',
+          type: 'error',
+          message: 'Invalid Credentials',
+          icon: 'mdi-error',
+          border: 'white'
         })
-        .catch((error) => {
-          console.error('@Nint error =>', error)
-        })
+      }
     }
   }
 }

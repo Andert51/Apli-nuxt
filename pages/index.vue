@@ -1,6 +1,8 @@
 <template>
   <v-row justify="center" align="center">
-    <LoginUser />
+    <LoginUser
+      @show-alert="showAlert"
+    />
   </v-row>
 </template>
 
@@ -15,6 +17,12 @@ export default {
   layout: 'login',
   middleware: 'detectpush',
   mounted () {
+  },
+  methods: {
+    showAlert (data) {
+      console.log('@Nint data => ', data)
+      this.$nuxt.$emit('show-alert', data)
+    }
   }
 }
 </script>
