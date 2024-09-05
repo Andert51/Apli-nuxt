@@ -32,7 +32,7 @@
       :absolute="!fixed"
       app
     >
-      Designed by Andres Torres Ceja <span>&copy; {{ new Date().getFullYear() }}</span>
+    <span> Designed By Andres Torres &copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
   </v-app>
 </template>
